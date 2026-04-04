@@ -43,6 +43,13 @@ import nl.siegmann.epublib.service.MediatypeService;
 public class Main {
 
     void main(String[] args) {
+        int exitCode = executar(args);
+        if (exitCode != 0) {
+            System.exit(exitCode);
+        }
+    }
+
+    int executar(String[] args) {
         var options = new Options();
 
         var opcaoDeDiretorioDosMD = new Option("d", "dir", true,
@@ -70,8 +77,7 @@ public class Main {
         } catch (ParseException e) {
             System.err.println(e.getMessage());
             ajuda.printHelp("cotuba", options);
-            System.exit(1);
-            return;
+            return 1;
         }
 
         Path diretorioDosMD;
@@ -292,6 +298,7 @@ public class Main {
             }
 
             System.out.println("Arquivo gerado com sucesso: " + arquivoDeSaida);
+            return 0;
 
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
@@ -299,7 +306,7 @@ public class Main {
                 System.err.println();
                 ex.printStackTrace();
             }
-            System.exit(1);
+            return 1;
         }
     }
 
